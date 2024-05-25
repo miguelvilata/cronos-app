@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.roomcronoapp.ui.theme.RoomCronoAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint //segun el profesor es necesario al utilizar drager y hilt
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
