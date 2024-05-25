@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -15,12 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.roomcronoapp.navigation.NavManager
 import com.example.roomcronoapp.ui.theme.RoomCronoAppTheme
+import com.example.roomcronoapp.viewModels.CronometroViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint //segun el profesor es necesario al utilizar drager y hilt
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val cronometroVM: CronometroViewModel by viewModels()
         enableEdgeToEdge()
         setContent {
             RoomCronoAppTheme {
@@ -29,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    NavManager()
+                    NavManager(cronometroVM)
                 }
 
             }
