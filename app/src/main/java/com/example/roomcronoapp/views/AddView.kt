@@ -33,13 +33,16 @@ import com.example.roomcronoapp.R
 import com.example.roomcronoapp.components.CircleButton
 import com.example.roomcronoapp.components.FloatButton
 import com.example.roomcronoapp.components.MainIconButton
+import com.example.roomcronoapp.components.MainTextField
 import com.example.roomcronoapp.components.MainTitle
 import com.example.roomcronoapp.components.formatTiempo
+import com.example.roomcronoapp.model.Cronos
 import com.example.roomcronoapp.viewModels.CronometroViewModel
+import com.example.roomcronoapp.viewModels.CronosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddView(navController: NavController, cronometroVM: CronometroViewModel) {
+fun AddView(navController: NavController, cronometroVM: CronometroViewModel, cronosVM: CronosViewModel) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -55,12 +58,17 @@ fun AddView(navController: NavController, cronometroVM: CronometroViewModel) {
             )
         },
     ) {
-        ContentAddView(it, navController, cronometroVM)
+        ContentAddView(it, navController, cronometroVM, cronosVM)
     }
 }
 
 @Composable
-fun ContentAddView(it: PaddingValues, navController: NavController, cronometroVM: CronometroViewModel) {
+fun ContentAddView(
+    it: PaddingValues,
+    navController: NavController,
+    cronometroVM: CronometroViewModel,
+    cronosVM: CronosViewModel,
+) {
 
     val state = cronometroVM.state
 
@@ -114,7 +122,27 @@ fun ContentAddView(it: PaddingValues, navController: NavController, cronometroVM
             ) {
                 cronometroVM.showTextField()
             }
-
+        }
+        
+        if (state.showTextField) {
+            MainTextField(
+                value = state.title,
+                onValueChange = { cronometroVM.onValue(it) },
+                label = "Title",
+            )
+            
+            Button(onClick = {
+                cronosVM.addCrono(
+                    Cronos(
+                        title = state.title,
+                        crono = cronometroVM.tiempo,
+                    )
+                )
+                cronometroVM.detener()
+                navController.popBackStack()
+            }) {
+                Text(text = "Guardar")
+            }
         }
     }
 }
