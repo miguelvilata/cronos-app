@@ -70,7 +70,7 @@ fun ContentHomeView(it: PaddingValues, navController: NavController, cronosVM: C
                 SwipeableActionsBox(endActions = listOf(delete), swipeThreshold = 270.dp) {
 
                     CronCard(titulo = item.title, crono = formatTiempo(item.crono)) {
-
+                        navController.navigate("EditView/${item.id}")
                     }
 
                 }
