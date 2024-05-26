@@ -1,5 +1,6 @@
 package com.example.roomcronoapp.viewModels
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -29,8 +30,12 @@ class CronometroViewModel @Inject constructor(private val repository: CronosRepo
     fun getCronoById(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCronoById(id).collect { item ->
-                tiempo = item.crono
-                state = state.copy(title = item.title)
+                if(item != null) {
+                    tiempo = item.crono
+                    state = state.copy(title = item.title)
+                } else {
+                    Log.d("Error", "El objeto crono es nulo")
+                }
             }
         }
     }
